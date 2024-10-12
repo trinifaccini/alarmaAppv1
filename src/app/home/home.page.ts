@@ -38,6 +38,9 @@ addIcons({
 export class HomePage implements OnDestroy {
 
   router = inject(Router);
+  duration = 5000; // Duración en milisegundos (5 segundos)
+  currentRepeat = 0;
+  repeatCount = 0;
   
   alarmaActiva: boolean = false;
   mostrarModal: boolean = false;
@@ -47,15 +50,44 @@ export class HomePage implements OnDestroy {
 
   private orientacionTimeout: any = null; // Agregar una variable para el temporizador
 
-
   // Variable para guardar la última orientación
   private ultimaOrientacion: string = '';
   
   audioIzquierda = new Howl({ src: ['assets/audios/izquierda.mp3'] });
   audioDerecha = new Howl({ src: ['assets/audios/derecha.mp3'] });
-  audioVertical = new Howl({ src: ['assets/audios/vertical.mp3'] });
-  audioError = new Howl({ src: ['assets/audios/error.mp3'] });
-  audioHorizontal = new Howl({ src: ['assets/audios/horizontal.mp3'] }); // Nuevo sonido para horizontal
+  audioVertical = new Audio('assets/audios/vertical.mp3');
+  audioError = new Audio('assets/audios/error.mp3');
+  audioHorizontal = new Audio('assets/audios/horizontal.mp3'); // Nuevo sonido para horizontal
+
+  private vibrationInterval: any;
+  private vibrationTimeout: any;
+
+  startVibration() {
+    // Comienza la vibración en intervalos pequeños (e.g., cada 500 ms)
+    this.vibrationInterval = setInterval(() => {
+      Haptics.vibrate();
+    }, 50);
+
+    // Programa la detención de la vibración después de 5 segundos
+    this.vibrationTimeout = setTimeout(() => {
+      this.stopVibration();
+    }, 5000); // 5000 ms = 5 segundos
+  }
+
+  stopVibration() {
+    // Limpia el intervalo para detener la vibración continua
+    if (this.vibrationInterval) {
+      clearInterval(this.vibrationInterval);
+      this.vibrationInterval = null;
+    }
+
+    // Limpia el timeout por si se detiene antes de tiempo
+    if (this.vibrationTimeout) {
+      clearTimeout(this.vibrationTimeout);
+      this.vibrationTimeout = null;
+    }
+  }
+
 
   constructor(private platform: Platform, private authService: AuthService) {
     this.cargarUsuario();
@@ -101,14 +133,42 @@ export class HomePage implements OnDestroy {
   obtenerEstadoInclinacion(gamma: number, beta: number, umbral: number): string {
 
     if (Math.abs(gamma) > umbral) {
-      if (gamma < -30) return 'izquierda'; // Ajusta el valor según la sensibilidad deseada
-      else if (gamma > 30) return 'derecha';
+      if (gamma < -30) {
+        this.stopVibration();
+        return 'izquierda'; // Ajusta el valor según la sensibilidad deseada}
+      }
+
+      else if (gamma > 30) {
+        this.stopVibration();
+        return 'derecha';
+      }
     }
     
-    if (Math.abs(beta) > 70) return 'vertical'; // Baja un poco el valor para detectar mejor la vertical
+    if (Math.abs(beta) > 70){
+      this.stopVibration();
+      return 'vertical'; // Baja un poco el valor para detectar mejor la vertical
+    }
     if (Math.abs(gamma) < 10 && Math.abs(beta) < 20) return 'horizontal'; // Ampliar el rango horizontal
     
     return ''; // Si no cumple ninguna condición
+  }
+
+
+  playAudioTimes(audio: HTMLAudioElement, repeat: number) {
+    audio.currentTime = 0; // Reinicia el audio al inicio
+    this.currentRepeat = 0; // Reinicia el contador
+    audio.play();
+
+    // Escucha cuando el audio termina para repetirlo
+    audio.onended = () => {
+      this.currentRepeat++;
+      if (this.currentRepeat < repeat) {
+        audio.currentTime = 0; // Reinicia el audio al inicio
+        audio.play();
+      } else {
+        audio.onended = null; // Limpia el evento al terminar todas las repeticiones
+      }
+    };
   }
   
 
@@ -135,14 +195,15 @@ export class HomePage implements OnDestroy {
   }
   
   vibrar() {
-    Haptics.vibrate({ duration: 5000 });
+    this.startVibration();
   }
 
   stopAllSounds() {
     this.audioIzquierda.stop();
     this.audioDerecha.stop();
-    this.audioVertical.stop();
-    this.audioHorizontal.stop();
+    this.audioVertical.pause();
+    this.audioHorizontal.pause();
+    this.audioError.pause();
   }
 
   mostrarDialogoDesactivacion() {
@@ -170,7 +231,6 @@ export class HomePage implements OnDestroy {
 
   desactivarAlarma() {
     this.alarmaActiva = false;
-
     Torch.disable(); // Apagar la linterna
     this.ultimaOrientacion = ''; // Restablecer la última orientación
     this.stopAllSounds();
@@ -178,7 +238,7 @@ export class HomePage implements OnDestroy {
 
   activarAlarmaError() {
     this.vibrar();
-    this.audioError.play();
+    this.playAudioTimes(this.audioError, 4)
     Torch.enable();
     setTimeout(() => Torch.disable(), 5000);
   }
@@ -186,11 +246,14 @@ export class HomePage implements OnDestroy {
  
   logout(): void {
     this.authService.logout();
+    this.stopAllSounds();
+    //desctivar vibración
+    this.orientacionSubscription.remove(); // Limpia la suscripción al destruir el componente
     this.router.navigate(['/login']);
+  
   }
 
   ngOnDestroy() {
-
     this.orientacionSubscription.remove(); // Limpia la suscripción al destruir el componente
     this.stopAllSounds();
   }

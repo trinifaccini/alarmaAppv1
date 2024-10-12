@@ -21,14 +21,48 @@
  
   </div>
 
+
+
+
+  <div *ngIf="mostrarModal" class="modal">
+    <div class="modal-content">
+      <span class="close" >&times;</span>
+
+      <h3 style="color: blue;">PARA DESACTIVAR LA ALARMA TENÉS QUE INGRESAR LA CONTRASEÑA</h3>
+ 
+      <ion-item color="dark">
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input 
+          type="password" 
+          [(ngModel)]="passwordIngresada" 
+          placeholder="******">
+        </ion-input>
+      </ion-item>
+
+      <div class="modal-buttons">
+        <ion-button 
+          (click)="verificarPassword()" 
+          expand="block" 
+          class="neon-button verificar-button">
+          Verificar
+        </ion-button>
+        <ion-button 
+          (click)="mostrarModal = false" 
+          expand="block" 
+          fill="outline" 
+          class="neon-button-outline">
+          Cancelar
+        </ion-button>
+      </div>
+    </div>
+  </div>
+
   <!-- Modal para ingresar contraseña -->
-  <ion-modal [isOpen]="mostrarModal" [backdropDismiss]="false" class="password-modal">
+  <!-- <ion-modal [isOpen]="mostrarModal" [backdropDismiss]="false" class="password-modal">
     <ng-template>
-      <ion-header>
         <ion-toolbar color="dark">
-          <ion-title>Ingrese la Contraseña</ion-title>
+          <ion-title>PARA DESACTIVAR LA ALARMA TENÉS QUE INGRESAR LA CONTRASEÑA</ion-title>
         </ion-toolbar>
-      </ion-header>
       <ion-content class="dark-theme">
         <div class="modal-content">
           <ion-item color="dark">
@@ -36,7 +70,7 @@
             <ion-input 
               type="password" 
               [(ngModel)]="passwordIngresada" 
-              placeholder="****">
+              placeholder="******">
             </ion-input>
           </ion-item>
 
@@ -58,7 +92,7 @@
         </div>
       </ion-content>
     </ng-template>
-  </ion-modal>
+  </ion-modal> -->
 
 
 
