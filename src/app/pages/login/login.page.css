@@ -1,0 +1,87 @@
+
+.login-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+    color: white;
+    font-family: "Ubuntu";
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  margin-bottom: 30px;
+  padding-top: 70px
+}
+
+h4 {
+  font-size: 15px;
+  letter-spacing: 0.05em;
+  width: 70%;
+}
+
+
+form {
+    width: 80%;
+    font-family: "Ubuntu";
+    
+    ion-item {
+    --background: black
+    border-radius: 8px;
+    margin-bottom: 30px;
+    --border-color: white;
+
+
+    ion-label {
+        font-family: "Ubuntu";       
+        --color: white;
+    }
+
+    align-content: center;
+
+    ion-input {
+        --placeholder-color: white;
+        --color: white;
+        font-family: "Ubuntu";
+
+    }
+    }
+
+
+}
+
+
+    .custom-button {
+    --background: #df783c;  /* Morado */
+    --color: #59594A;         /* Texto blanco */
+    --background-activated: #bfb6a3; /* Color de fondo cuando se presiona */
+    width: 30%;
+    }
+
+    .login-button {
+    --background: #0f2e6a;  /* Morado */
+    --color: #cfd3e4;         /* Texto blanco */
+    --background-activated: #bfb6a3; /* Color de fondo cuando se presiona */
+    width: 100%;
+
+    }
+
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+
+
+}
+
+ion-button {
+    --padding-top: 30px;
+    --padding-bottom: 30px;
+}
+
+
+

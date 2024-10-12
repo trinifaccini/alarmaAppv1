@@ -1,0 +1,65 @@
+<ion-content fullscreen class="dark-theme">
+
+  <div class="alarm-screen">
+
+    <button 
+      class="alarm-button" 
+      [ngClass]="{'active': alarmaActiva}"
+      (click)="alarmaActiva ? mostrarDialogoDesactivacion() : activarAlarma()">
+      <div class="button-content">
+        <ion-icon style="--background-color: alarmaActiva ? green : red;" name="warning-outline" class="button-icon"></ion-icon>
+        <span class="button-text">{{ alarmaActiva ? 'Desactivar Alarma' : 'Activar Alarma' }}</span>
+      </div>
+    </button>
+
+
+    <ion-fab vertical="top" horizontal="end" slot="fixed">
+      <ion-fab-button color="warning" (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>      
+      </ion-fab-button>
+    </ion-fab>
+ 
+  </div>
+
+  <!-- Modal para ingresar contraseña -->
+  <ion-modal [isOpen]="mostrarModal" [backdropDismiss]="false" class="password-modal">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar color="dark">
+          <ion-title>Ingrese la Contraseña</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="dark-theme">
+        <div class="modal-content">
+          <ion-item color="dark">
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input 
+              type="password" 
+              [(ngModel)]="passwordIngresada" 
+              placeholder="****">
+            </ion-input>
+          </ion-item>
+
+          <div class="modal-buttons">
+            <ion-button 
+              (click)="verificarPassword()" 
+              expand="block" 
+              class="neon-button verificar-button">
+              Verificar
+            </ion-button>
+            <ion-button 
+              (click)="mostrarModal = false" 
+              expand="block" 
+              fill="outline" 
+              class="neon-button-outline">
+              Cancelar
+            </ion-button>
+          </div>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+
+
+</ion-content>

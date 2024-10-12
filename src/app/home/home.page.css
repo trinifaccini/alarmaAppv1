@@ -1,0 +1,59 @@
+ion-content {
+  --background: #000000;
+}
+
+
+.alarm-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 100vh;
+    text-align: center;
+    font-family: "Ubuntu";
+  
+  
+}
+
+.alarm-button {
+  width: 90%; /* Ajusta el ancho según lo necesites */
+  height: 90%; /* Ajusta la altura según lo necesites */
+  border-radius: 15px; /* Esquinas redondeadas */
+  font-size: 24px; /* Aumentar el tamaño de la fuente */
+  transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+}
+
+.alarm-button.active {
+  background-color: green; /* Color verde cuando la alarma está activa */
+}
+
+.alarm-button:not(.active) {
+  background-color: red; /* Color rojo cuando la alarma está desactivada */
+}
+
+.status-circle {
+  margin-bottom: 20px; /* Espaciado entre el círculo de estado y el botón */
+}
+
+.status-circle.active {
+  color: green; /* Color verde para el círculo cuando la alarma está activa */
+}
+
+.status-circle:not(.active) {
+  color: red; /* Color rojo para el círculo cuando la alarma está desactivada */
+}
+
+.button-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button-icon {
+  font-size: 48px; /* Tamaño del icono */
+}
+
+.button-text {
+  margin-top: 10px; /* Espacio entre el icono y el texto */
+}
+

@@ -1,0 +1,59 @@
+<ion-content class="fullscreen"  style="--background: black">
+
+  <div class="login-content">
+
+    <h1>INGRESÁ TUS DATOS</h1>
+    <h4>Esta es una aplicación de seguridad</h4>
+    <h4>Al entrar, podrás activar una alarma para proteger tu dispositivo</h4>
+
+    @if (errorMessage) {
+      <p style="text-align: center; color: red;">{{errorMessage}}</p>
+    }
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+      <ion-item>
+        <ion-input labelPlacement="floating" placeholder="ejemplo@gmail.com" type="email" formControlName="email">
+          <div slot="label">Correo <ion-text style="color: red;">(Requerido)</ion-text></div>
+        </ion-input>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-input labelPlacement="floating" placeholder="*******" type="password" formControlName="password">
+          <div slot="label">Clave <ion-text style="color: red;">(Requerido)</ion-text></div>
+        </ion-input>
+      </ion-item>
+
+
+      <div class="buttons">
+
+        <ion-button class="custom-button" expand="block" type="button"  (click)="autocompleCredentials(0)" style="--background: #d73cdf;">
+          <ion-icon name="color-fill-outline"></ion-icon>        
+        </ion-button>
+
+        <ion-button class="custom-button" expand="block" type="button"  (click)="autocompleCredentials(1)" style="--background: #3cdf65;">
+          <ion-icon name="color-fill-outline"></ion-icon>        
+        </ion-button>
+
+        <ion-button class="custom-button" expand="block" type="button"  (click)="autocompleCredentials(2)" style="--background: #df803c;">
+          <ion-icon name="color-fill-outline"></ion-icon>        
+        </ion-button>
+
+      </div>
+
+      <ion-button class="login-button" expand="block" type="submit" [disabled]="loginForm.invalid">
+        <!-- <ion-icon name="log-in-outline"></ion-icon> -->
+         INICIAR SESIÓN
+      </ion-button>
+
+     
+    </form>
+
+
+    <!-- <div class="forgot-password">
+      <p (click)="navigateToRegister()" style="cursor: pointer; ">No tenes cuenta? Registrate</p>
+    </div> -->
+
+</div>
+</ion-content>
