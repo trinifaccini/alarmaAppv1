@@ -12,7 +12,7 @@ import { User } from '@angular/fire/auth';
 
 
 import { addIcons } from 'ionicons';
-import {lockClosed, lockOpen, logOut, shield, shieldOutline, warningOutline } from 'ionicons/icons';
+import {lockClosed, lockOpen, logoUsd, logOut, shield, shieldOutline, warningOutline } from 'ionicons/icons';
 import { Router } from '@angular/router';
 
 addIcons({
@@ -62,6 +62,8 @@ export class HomePage implements OnDestroy {
 
   private vibrationInterval: any;
   private vibrationTimeout: any;
+
+  tryingLogout = false; 
 
   startVibration() {
     // Comienza la vibración en intervalos pequeños (e.g., cada 500 ms)
@@ -200,8 +202,17 @@ export class HomePage implements OnDestroy {
         // Llama a la función de inicio de sesión usando el email del usuario
         await this.authService.login(this.usuario.email!, this.passwordIngresada);
         this.desactivarAlarma(); // Desactiva la alarma si el inicio de sesión es exitoso
+
+        if(this.tryingLogout) {
+          this.authService.logout();
+          this.stopAllSounds();
+          //desctivar vibración
+          this.orientacionSubscription.remove(); // Limpia la suscripción al destruir el componente
+          this.router.navigate(['/login']);
+        }
       } catch (error) {
         console.error('Error al iniciar sesión:', error);
+        this.tryingLogout = false;
         this.activarAlarmaError(); // Maneja el error
       } finally {
         this.passwordIngresada = '';
@@ -228,29 +239,16 @@ export class HomePage implements OnDestroy {
   }
 
  
-  async logout(): Promise<void> {
+  logout(): void {
 
-
-    if (this.usuario) { // Asegúrate de que el usuario está disponible
-      try {
-        // Llama a la función de inicio de sesión usando el email del usuario
-        await this.authService.login(this.usuario.email!, this.passwordIngresada);
-        this.authService.logout();
-        this.stopAllSounds();
-        this.orientacionSubscription.remove(); // Limpia la suscripción al destruir el componente
-        this.router.navigate(['/login']);
-      } catch (error) {
-        console.error('Error al iniciar sesión:', error);
-        this.activarAlarmaError(); // Maneja el error
-      } finally {
-        this.passwordIngresada = '';
-        this.mostrarModal = false;
-      }
-    } else {
-      console.error('No hay usuario autenticado.');
-      // Aquí puedes manejar el caso en que no haya usuario autenticado
+    if(this.alarmaActiva){
+      this.tryingLogout = true; 
+      this.mostrarModal = true;
     }
-    
+
+    else {
+      this.router.navigate(['/login']);
+    }
     
   
   }

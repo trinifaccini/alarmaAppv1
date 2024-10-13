@@ -24,13 +24,13 @@
     <style name="Theme.MyApp.Launcher" parent="Theme.SplashScreen">
         <!-- Color de fondo de la pantalla de inicio -->
         <item name="android:windowSplashScreenBackground">@color/black</item>
-        
+
         <!-- Ícono del splash (usualmente el ícono de la app) -->
         <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_round</item>
-        
+
         <!-- Duración mínima que el sistema mostrará la pantalla splash -->
-        <item name="android:windowSplashScreenAnimationDuration">300</item> <!-- Milisegundos -->
-        
+        <item name="android:windowSplashScreenAnimationDuration">3000</item> <!-- Milisegundos -->
+
         <!-- Controla si el ícono debe ajustarse automáticamente a la pantalla -->
         <!-- <item name="android:windowSplashScreenIconBackgroundColor">@color/your_icon_background_color</item> -->
     </style>
