@@ -66,7 +66,7 @@ export class HomePage implements OnDestroy {
     // Comienza la vibración en intervalos pequeños (e.g., cada 500 ms)
     this.vibrationInterval = setInterval(() => {
       Haptics.vibrate();
-    }, 50);
+    }, 100);
 
     // Programa la detención de la vibración después de 5 segundos
     this.vibrationTimeout = setTimeout(() => {
@@ -153,23 +153,6 @@ export class HomePage implements OnDestroy {
     return ''; // Si no cumple ninguna condición
   }
 
-
-  playAudioTimes(audio: HTMLAudioElement, repeat: number) {
-    audio.currentTime = 0; // Reinicia el audio al inicio
-    this.currentRepeat = 0; // Reinicia el contador
-    audio.play();
-
-    // Escucha cuando el audio termina para repetirlo
-    audio.onended = () => {
-      this.currentRepeat++;
-      if (this.currentRepeat < repeat) {
-        audio.currentTime = 0; // Reinicia el audio al inicio
-        audio.play();
-      } else {
-        audio.onended = null; // Limpia el evento al terminar todas las repeticiones
-      }
-    };
-  }
   
 
   reproducirSonido(direccion: string) {
@@ -238,7 +221,7 @@ export class HomePage implements OnDestroy {
 
   activarAlarmaError() {
     this.vibrar();
-    this.playAudioTimes(this.audioError, 4)
+    this.audioError.play()
     Torch.enable();
     setTimeout(() => Torch.disable(), 5000);
   }
