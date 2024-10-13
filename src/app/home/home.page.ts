@@ -55,9 +55,10 @@ export class HomePage implements OnDestroy {
   
   audioIzquierda = new Howl({ src: ['assets/audios/izquierda.mp3'] });
   audioDerecha = new Howl({ src: ['assets/audios/derecha.mp3'] });
-  audioVertical = new Audio('assets/audios/vertical.mp3');
-  audioError = new Audio('assets/audios/error.mp3');
-  audioHorizontal = new Audio('assets/audios/horizontal.mp3'); // Nuevo sonido para horizontal
+  audioVertical = new Howl({ src: ['assets/audios/vertical.mp3'] });
+  audioError = new Howl({ src: ['assets/audios/error.mp3'] });
+  audioHorizontal = new Howl({ src: ['assets/audios/horizontal.mp3'] });
+
 
   private vibrationInterval: any;
   private vibrationTimeout: any;
@@ -184,9 +185,9 @@ export class HomePage implements OnDestroy {
   stopAllSounds() {
     this.audioIzquierda.stop();
     this.audioDerecha.stop();
-    this.audioVertical.pause();
-    this.audioHorizontal.pause();
-    this.audioError.pause();
+    this.audioVertical.stop();
+    this.audioHorizontal.stop();
+    this.audioError.stop();
   }
 
   mostrarDialogoDesactivacion() {
@@ -227,12 +228,30 @@ export class HomePage implements OnDestroy {
   }
 
  
-  logout(): void {
-    this.authService.logout();
-    this.stopAllSounds();
-    //desctivar vibración
-    this.orientacionSubscription.remove(); // Limpia la suscripción al destruir el componente
-    this.router.navigate(['/login']);
+  async logout(): Promise<void> {
+
+
+    if (this.usuario) { // Asegúrate de que el usuario está disponible
+      try {
+        // Llama a la función de inicio de sesión usando el email del usuario
+        await this.authService.login(this.usuario.email!, this.passwordIngresada);
+        this.authService.logout();
+        this.stopAllSounds();
+        this.orientacionSubscription.remove(); // Limpia la suscripción al destruir el componente
+        this.router.navigate(['/login']);
+      } catch (error) {
+        console.error('Error al iniciar sesión:', error);
+        this.activarAlarmaError(); // Maneja el error
+      } finally {
+        this.passwordIngresada = '';
+        this.mostrarModal = false;
+      }
+    } else {
+      console.error('No hay usuario autenticado.');
+      // Aquí puedes manejar el caso en que no haya usuario autenticado
+    }
+    
+    
   
   }
 

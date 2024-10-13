@@ -26,7 +26,7 @@
 
   <div *ngIf="mostrarModal" class="modal">
     <div class="modal-content">
-      <span class="close" >&times;</span>
+      <span class="close" (click)="mostrarModal = false" >&times;</span>
 
       <h3 style="color: blue;">PARA DESACTIVAR LA ALARMA TENÉS QUE INGRESAR LA CONTRASEÑA</h3>
  
@@ -45,13 +45,6 @@
           expand="block" 
           class="neon-button verificar-button">
           Verificar
-        </ion-button>
-        <ion-button 
-          (click)="mostrarModal = false" 
-          expand="block" 
-          fill="outline" 
-          class="neon-button-outline">
-          Cancelar
         </ion-button>
       </div>
     </div>
