@@ -7,7 +7,7 @@
       [ngClass]="{'active': alarmaActiva}"
       (click)="alarmaActiva ? mostrarDialogoDesactivacion() : activarAlarma()">
       <div class="button-content">
-        <ion-icon style="--background-color: alarmaActiva ? green : red;" name="warning-outline" class="button-icon"></ion-icon>
+        <ion-icon style="--background-color: alarmaActiva ? red : green;" name="warning-outline" class="button-icon"></ion-icon>
         <span class="button-text">{{ alarmaActiva ? 'Desactivar Alarma' : 'Activar Alarma' }}</span>
       </div>
     </button>

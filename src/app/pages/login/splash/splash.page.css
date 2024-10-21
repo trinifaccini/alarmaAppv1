@@ -1,0 +1,36 @@
+.splash-screen {
+    background-color: #000000;
+    margin: 0;
+    height: 100vh; /* Ocupa toda la altura de la ventana */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    animation: vibrate 5s ease-out forwards;
+
+    h1 {
+      color: rgb(255, 255, 255);
+      font-family: "Ubuntu"; 
+      font-size: 40px;
+      font-weight: bold;
+      animation: vibrate 0.1s infinite; /* Duración de 0.1s y repetición infinita */
+      animation-delay: 0.5s; /* Retardo de 1 segundo antes de que empiece la animación */
+    }
+
+    .animateSplash {
+      margin-top: 20px;
+      animation: vibrate 0.1s infinite; /* Duración de 0.1s y repetición infinita */
+      animation-delay: 0.5s; /* Retardo de 1 segundo antes de que empiece la animación */
+    }
+  }
+
+   
+    @keyframes vibrate {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(2px, -2px); }
+    60% { transform: translate(-2px, -2px); }
+    80% { transform: translate(2px, 2px); }
+    100% { transform: translate(0); }
+  }

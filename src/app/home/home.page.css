@@ -24,11 +24,11 @@ ion-content {
 }
 
 .alarm-button.active {
-  background-color: green; /* Color verde cuando la alarma está activa */
+  background-color: red; /* Color verde cuando la alarma está activa */
 }
 
 .alarm-button:not(.active) {
-  background-color: red; /* Color rojo cuando la alarma está desactivada */
+  background-color: green; /* Color rojo cuando la alarma está desactivada */
 }
 
 
@@ -40,11 +40,12 @@ ion-content {
 }
 
 .button-icon {
-  font-size: 48px; /* Tamaño del icono */
+  font-size: 80px; /* Tamaño del icono */
 }
 
 .button-text {
-  margin-top: 10px; /* Espacio entre el icono y el texto */
+  margin-top: 15px; /* Espacio entre el icono y el texto */
+  font-size: 30px;
 }
 
 /* app.component.css */

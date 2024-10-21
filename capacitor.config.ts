@@ -7,7 +7,7 @@ const config: CapacitorConfig = {
   plugins: {
     SplashScreen: {
       launchAutoHide: false, // No oculta automáticamente el splash screen al inicio
-      backgroundColor: "#ffffffff", // Color de fondo del splash screen
+      backgroundColor: "#000000", // Color de fondo del splash screen
       androidScaleType: "CENTER_CROP", // Tipo de escalado en Android
       showSpinner: true, // Mostrar el spinner de carga
       androidSpinnerStyle: "large", // Estilo del spinner en Android

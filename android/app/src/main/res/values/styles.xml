@@ -16,10 +16,6 @@
     </style>
 
 
-    <!-- <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
-        <item name="android:background">@drawable/splash</item>
-    </style> -->
-
     <!-- Estilo de la pantalla de inicio para Android 12+ -->
     <style name="Theme.MyApp.Launcher" parent="Theme.SplashScreen">
         <!-- Color de fondo de la pantalla de inicio -->
